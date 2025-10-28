@@ -1,0 +1,17 @@
+# Use the official lightweight Nginx image
+FROM nginx:alpine
+
+# Install envsubst (part of gettext) to enable environment variable substitution
+RUN apk add --no-cache gettext
+
+# Copy the Nginx configuration template into the container
+COPY nginx.conf.template /etc/nginx/nginx.conf.template
+
+# Copy the custom entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
+# Give execute permission to the entrypoint script
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
